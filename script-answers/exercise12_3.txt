@@ -1,0 +1,11 @@
+docker ps -a
+docker start jovial_elion
+docker kill jovial_elion
+docker start -i jovial_elion
+
+apt-get update
+apt-get install nano
+nano /usr/src/app/index.js
+
+console.log('Hello World')
+console.log('What is going on')

@@ -1,0 +1,8 @@
+PUT http://localhost:3000/todos/66c3742ab7afa472fec76a8b HTTP/1.1
+content-type: application/json
+
+
+{
+    "text": "Write code",
+    "done": true
+}

@@ -1,0 +1,33 @@
+(base) % docker exec -it todo-backend-redis-1 bash
+root@0aad03d35fe9:/data# key*
+bash: key*: command not found
+root@0aad03d35fe9:/data# KEYS *
+bash: KEYS: command not found
+root@0aad03d35fe9:/data# KEYS *
+bash: KEYS: command not found
+root@0aad03d35fe9:/data# redis-cli
+127.0.0.1:6379> KEYS *
+1) "added_todos"
+2) "mycounter"
+3) "count"
+127.0.0.1:6379> GET count
+"1"
+127.0.0.1:6379> GET mycounter
+"1"
+127.0.0.1:6379> GET added_todos
+"1"
+127.0.0.1:6379> SET added_todos "9001"
+OK
+127.0.0.1:6379> GET added_todos
+"9001"
+127.0.0.1:6379> DEL count mycounter
+(integer) 2
+127.0.0.1:6379> KEYS *
+1) "added_todos"
+127.0.0.1:6379> DEL added_todos
+(integer) 1
+127.0.0.1:6379> KEYS *
+(empty array)
+127.0.0.1:6379> exit
+root@0aad03d35fe9:/data# exit
+exit
