@@ -1,0 +1,38 @@
+services:
+  app:
+    image: my-app-frontend
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app/frontend
+    container_name: my-app-frontend
+    ports:
+      - 5173:80
+    environment:
+    - VITE_BACKEND_URL=http://localhost:8080/api/
+
+  debug-helper:
+    image: busybox
+
+  server:
+    image: my-app-backend
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: ./backend/Dockerfile # This will simply tell which dockerfile to read
+    volumes:
+      - ./backend/:/usr/src/app/ # The path can be relative, so ./ is enough to say "the same location as the docker-compose.yml"
+    ports:
+      - 3001:3001
+    container_name: my-app-backend # This will name the container hello-front-dev
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: my-app-reverse-proxy
+    depends_on:
+      - app # wait for the frontend container to be started
+      - server
